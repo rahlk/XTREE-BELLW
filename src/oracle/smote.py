@@ -1,7 +1,7 @@
 from collections import Counter
 from pdb import set_trace
 from random import choice, uniform as rand
-
+from random import seed
 import numpy as np
 import pandas as pd
 from scipy.spatial.distance import euclidean
@@ -13,7 +13,7 @@ with warnings.catch_warnings():
     warnings.filterwarnings("ignore")
 
 
-def SMOTE(data=None, atleast=50, atmost=101, a=None, b=None, k=5):
+def SMOTE(data=None, atleast=50, atmost=200, a=None, b=None, k=14):
     """
     Synthetic Minority Oversampling Technique
     """
@@ -80,8 +80,9 @@ def SMOTE(data=None, atleast=50, atmost=101, a=None, b=None, k=5):
     klass = lambda df: df[df.columns[-1]]
     count = Counter(klass(data))
     major, minor = count.keys()
-    atleast = 10*count[minor]
-    atmost = 5*count[major]
+    # `(0)
+    # atleast = 10*count[minor]
+    # atmost = 5*count[major]
     for u in count.keys():
         if u == minor:
             newCells.extend(populate([r for r in data.as_matrix() if r[-1] == u], atleast=atleast))

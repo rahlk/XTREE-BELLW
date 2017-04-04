@@ -26,19 +26,20 @@ def abcd(actual, predicted, distribution, as_percent=True, threshold=0):
 
 
     try:
-        fpr, tpr, thresholds = roc_curve(actual, distribution)
-        auroc = round(roc_auc_score(actual, distribution), 2)
-        cutoff = uniform(0.27, 0.31)
-        for a, b, c in zip(fpr, tpr, thresholds):
-            if a < cutoff:
-                threshold = c
+        # fpr, tpr, thresholds = roc_curve(actual, distribution)
+        # auroc = round(roc_auc_score(actual, distribution), 2)
+        # cutoff = uniform(0.39, 0.4)
+        # for a, b, c in zip(fpr, tpr, thresholds):
+        #     if a < cutoff:
+        #         threshold = c
         # set_trace()
-        predicted = [1 if val>threshold else 0 for val in distribution]
+        predicted = [1 if val>0.77 else 0 for val in distribution]
     except:
         auroc = 0
         # set_trace()
         predicted = [1 if val > 0 else 0 for val in predicted]
-
+    # print(threshold)
+    auroc = round(roc_auc_score(actual, distribution), 2)
     c_mtx = confusion_matrix(actual, predicted)
 
     "Probablity of Detection: Pd"

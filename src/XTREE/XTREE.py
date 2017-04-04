@@ -50,7 +50,7 @@ class changes():
             self.log.update({name: delt})
 
 
-class patches:
+class Patches:
     def __init__(i, train, test, trainDF, testDF, tree=None, config=False):
         i.train = train
         i.trainDF = trainDF
@@ -143,14 +143,14 @@ class patches:
         return pd.DataFrame(newRows, columns=i.testDF.columns)
 
 
-def execute(train, test):
+def execute(train_DF, test_DF):
     """XTREE"""
 
-    train_DF = list2dataframe(train)
-    test_DF = list2dataframe(test)
-    tree = pyC45.dtree(train_DF)
+    # train_DF = list2dataframe(train)  # create a pandas dataframe of training data
+    # test_DF = list2dataframe(test)  # create a pandas dataframe of testing data
+    tree = pyC45.dtree(train_DF) # Create a decision tree
     # set_trace()
-    patch = patches(train=train, test=test, trainDF=train_DF, testDF=test_DF, tree=tree)
+    patch = Patches(train=None, test=None, trainDF=train_DF, testDF=test_DF, tree=tree)
     return patch.main()
 
 

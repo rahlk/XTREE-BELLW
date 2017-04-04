@@ -46,6 +46,7 @@ def dtree(tbl, rows=None, lvl=-1, asIs=10 ** 32, up=None, klass = -1, branch=[],
   here.score = np.mean(klass)
   splits = discretize(feature, klass)
   LO, HI = min(feature), max(feature)
+
   def pairs(lst):
     while len(lst)>1:
       yield (lst.pop(0), lst[0])
@@ -82,8 +83,7 @@ def dtree(tbl, rows=None, lvl=-1, asIs=10 ** 32, up=None, klass = -1, branch=[],
                           , f=name, val=span, opt=opt)]
 
   return here
-  # # ------ Debug ------
-  # set_trace()
+
 
 def dtree2(tbl, rows=None, lvl=-1, asIs=10 ** 32, up=None, klass = -1, branch=[],
           f=None, val=None, opt=None):
@@ -121,7 +121,7 @@ def dtree2(tbl, rows=None, lvl=-1, asIs=10 ** 32, up=None, klass = -1, branch=[]
       yield (lst.pop(0), lst[0])
   cutoffs = [LO, HI]
 
-  # set_trace()
+
   if lvl>(opt.maxLvL if opt.prune else int(len(features)*opt.infoPrune)):
     return here
   if asIs == 0:
