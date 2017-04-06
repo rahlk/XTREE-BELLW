@@ -21,7 +21,7 @@ import numpy as np
 
 def impact(test, pred):
     actuals = test[test.columns[-1]]
-    gain = [round(100 - 100 * (sum(actuals) / sum(p)), 2) for p in pred]
+    gain = round(100 - 100 * (sum(actuals) / sum(pred)), 2)
 
     # print("{}\t{}\t{}".format(np.median(gain)
     #                           , np.percentile(gain, 25)
@@ -32,23 +32,8 @@ def impact(test, pred):
 
 
 def pred_stats(before, after, distr):
-    pd, pf = [], []
-    for aft, dis in zip(after, distr):
-        aa, bb = abcd(before, aft, dis)[:2]
-        pd.append(aa)
-        pf.append(bb)
-
-    # print("{0:.2f}\t{1:.2f}\t{0:.2f}\t".format(np.median(pd), np.percentile(pd, 25)
-    #                                            , np.percentile(pd, 75)), end="")
-    #
-    # print("{0:.2f}\t{1:.2f}\t{0:.2f}\t".format(np.median(pf), np.percentile(pf, 25)
-    #                                            , np.percentile(pf, 75)), end="")
-
-    # return [np.median(pd), np.percentile(pd, 25), np.percentile(pd, 75), \
-    #        np.median(pf), np.percentile(pf, 25), np.percentile(pf, 75)]
-
-    return round(aa, 2), round(bb, 2)
-
+    pd, pf = abcd(before, after, distr)[:2]
+    return round(pd, 2), round(pf, 2)
 
 
 def transfer_lessons(n_reps=10):
@@ -63,7 +48,8 @@ def transfer_lessons(n_reps=10):
             if not "train" in locals():
                 train = list2dataframe(data[paths.bellw].data)
 
-            test, validation = train_test_split(list2dataframe(paths.data), test_size=0.8)
+            test, validation = train_test_split(list2dataframe(paths.data),
+                                                test_size=0.8)
             # test = list2dataframe(paths.data[-1])
             # validation = list2dataframe(paths.data[:-1])
             patched = XTREE.execute(train, test)
@@ -75,10 +61,10 @@ def transfer_lessons(n_reps=10):
             distr2.append(bb)
 
             res[proj[:6]].extend(pred_stats(before=test[test.columns[-1]],
-                       after=pred2,
-                       distr=distr2))
+                                            after=pred2,
+                                            distr=distr2))
 
-            res[proj[:6]].extend(impact(test, pred))
+            res[proj[:6]].append(impact(test, pred))
             return res
 
 
@@ -93,7 +79,8 @@ def transfer_lessons3():
             if not "train" in locals():
                 train = list2dataframe(data[paths.bellw].data)
 
-            test, validation = train_test_split(list2dataframe(paths.data), test_size=0.8)
+            test, validation = train_test_split(list2dataframe(paths.data),
+                                                test_size=0.8)
             # test = list2dataframe(paths.data[-1])
             # validation = list2dataframe(paths.data[:-1])
             patched = XTREE.execute(train, test)
@@ -104,8 +91,8 @@ def transfer_lessons3():
             distr.append(b)
             distr2.append(bb)
             res[proj[:6]].extend(pred_stats(before=test[test.columns[-1]],
-                       after=pred2,
-                       distr=distr2))
+                                            after=pred2,
+                                            distr=distr2))
 
             res[proj[:6]].extend(impact(test, pred))
             yield res
@@ -119,24 +106,28 @@ def transfer_lessons4():
             "If training data doesn't exist, create it."
             pred, pred2, distr, distr2 = [], [], [], []
 
-            if not "train" in locals():
-                train = list2dataframe(data[paths.bellw].data)
+            if not "train_bellw" in locals():
+                train_bellw = list2dataframe(data[paths.bellw].data)
 
-            test, validation = train_test_split(list2dataframe(paths.data), test_size=0.8)
-            # test = list2dataframe(paths.data[-1])
-            # validation = list2dataframe(paths.data[:-1])
-            patched = XTREE.execute(train, test)
-            a, b = rforest(validation, patched)  # How good are the patches
-            aa, bb = rforest(validation, test)  # How good are the predcitions
-            pred.append(a)
-            pred2.append(aa)
-            distr.append(b)
-            distr2.append(bb)
+            train_local = list2dataframe(paths.data[:-1])
+            test = list2dataframe(paths.data[-1])
+
+            patched_local = XTREE.execute(train_local, test)
+            patched_bellw = XTREE.execute(train_bellw, test)
+
+            pred, distr = rforest(train_bellw,
+                                  patched_local)  # How good are the patches
+            pred2, distr2 = rforest(train_bellw,
+                                    patched_bellw)  # How good are the predcitions
+            pred3, distr3 = rforest(train_bellw,
+                                    test)  # How good are the predcitions
+
             res[proj[:6]].extend(pred_stats(before=test[test.columns[-1]],
-                       after=pred2,
-                       distr=distr2))
+                                            after=pred3,
+                                            distr=distr3))
 
-            res[proj[:6]].extend(impact(test, pred))
+            res[proj[:6]].append(impact(test, pred))
+            res[proj[:6]].append(impact(test, pred2))
             yield res
 
 
@@ -148,13 +139,16 @@ def transfer_lessons2(n_reps=1):
             print(proj[:4], end="\t")
             "If training data doesn't exist, create it."
 
-            train, validation = train_test_split(list2dataframe(paths.data), test_size=0.8)
+            train, validation = train_test_split(list2dataframe(paths.data),
+                                                 test_size=0.8)
             test = paths.data[-1]
             validation = paths.data[:-1]
             patched = XTREE.execute(train, test)
             test = list2dataframe(test)
-            pred, distr = rforest(validation, patched)  # How good are the patches
-            pred2, distr2 = rforest(validation, test)  # How good are the predcitions
+            pred, distr = rforest(validation,
+                                  patched)  # How good are the patches
+            pred2, distr2 = rforest(validation,
+                                    test)  # How good are the predcitions
 
             pred_stats(before=test[test.columns[-1]],
                        after=pred2,
@@ -167,7 +161,8 @@ def transfer_lessons2(n_reps=1):
 if __name__ == "__main__":
     reps = dict()
     import random
-    for n in xrange(1):
+
+    for n in xrange(10):
         for res in transfer_lessons4():
             # print(res.keys()[0])
             random.seed(n)
@@ -176,10 +171,9 @@ if __name__ == "__main__":
             else:
                 reps.update({res.keys()[0]: [res[res.keys()[0]]]})
 
-
     for key, value in reps.iteritems():
         print(key
-              ,"\t".join([str(x) for x in np.median(value, axis=0)])
-              ,"\t".join([str(x) for x in np.percentile(value, 25, axis=0)])
-              ,"\t".join([str(x) for x in np.percentile(value, 75, axis=0)])
+              , "\t".join([str(x) for x in np.median(value, axis=0)])
+              , "\t".join([str(x) for x in np.percentile(value, 25, axis=0)])
+              , "\t".join([str(x) for x in np.percentile(value, 75, axis=0)])
               , sep="\t")

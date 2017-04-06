@@ -9,4 +9,4 @@ set ylabel "% Improvement"
 set xtics nomirror rotate by -45 offset character 0, 0, 0     norangelimit
 set size ratio 1
 unset key
-plot "Bellwether Train and Plan.dat" using 1:5:8:11:xticlabels(2) with errorbars lw 2 title ""
+plot "Data" using 1:5:8:11:xticlabels(2) with errorbars lw 2 title ""
