@@ -73,7 +73,7 @@ class run():
             bugThres=1).headers
 
     def categorize(self):
-        dir = os.path.join(root, 'Data/Jureczko')
+        dir = os.path.join(root, 'data/Jureczko')
         self.projects = [Name for _, Name, __ in walk(dir)][0]
         self.numData = len(self.projects)  # Number of data
         one, two = explore(dir)

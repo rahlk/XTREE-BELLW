@@ -14,7 +14,7 @@ def where(data):
   if isinstance(data, pd.core.frame.DataFrame):
     data = data.as_matrix()
   if not isinstance(data, np.ndarray):
-    raise TypeError('Incorrect data format. Must be a pandas Data Frame, or a numpy nd-array.')
+    raise TypeError('Incorrect data format. Must be a pandas data Frame, or a numpy nd-array.')
 
   N = np.shape(data)[0]
   clusters = []
@@ -49,7 +49,7 @@ def where(data):
   recurse(data)
   return clusters
 
-def _test(dir='../Data/Jureczko/ant/'):
+def _test(dir='../data/Jureczko/ant/'):
   files=[]
   for (dirpath, _, filename) in walk(dir):
     for f in filename:

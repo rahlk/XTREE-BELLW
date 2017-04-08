@@ -19,7 +19,7 @@ class data():
     This data structure holds training and testing data
     """
 
-    def __init__(self, dataName='ant', dir=root + "/Data/Jureczko"):
+    def __init__(self, dataName='ant', dir=root + "/data/Jureczko"):
         projects = [Name for _, Name, __ in walk(dir)][0]
         numData = len(projects)  # Number of data
         one, two = explore(dir)

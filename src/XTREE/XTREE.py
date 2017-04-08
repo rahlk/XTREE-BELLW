@@ -46,7 +46,10 @@ class changes():
 
     def save(self, name=None, old=None, new=None):
         if not old == new:
-            delt = new / old  # if old>0 else 0
+            try:
+                delt = new / old  # if old>0 else 0
+            except:
+                delt = 0
             self.log.update({name: delt})
 
 
@@ -85,10 +88,11 @@ class Patches:
                 try:
                     if kid.val[0] <= testInst[kid.f].values[0] < kid.val[1]:
                         return i.find(testInst, kid)
-                    elif kid.val[1] == testInst[kid.f].values[0] == i.trainDF.describe()[kid.f]['max']:
+                    elif kid.val[1] == testInst[kid.f].values[0] == \
+                            i.trainDF.describe()[kid.f]['max']:
                         return i.find(testInst, kid)
                 except:
-                    set_trace()
+                    return i.find(testInst, kid)
         return t
 
     @staticmethod
@@ -108,10 +112,13 @@ class Patches:
         leaves = flatten([i.leaves(_k) for _k in node.kids])
         try:
             if i.config:
-                best = sorted([l for l in leaves if l.score < current.score], key=lambda F: i.howfar(current, F))[0]
+                best = sorted([l for l in leaves if l.score < current.score],
+                              key=lambda F: i.howfar(current, F))[0]
             else:
                 best = \
-                    sorted([l for l in leaves if l.score <= 0.01 * current.score], key=lambda F: i.howfar(current, F))[
+                    sorted(
+                        [l for l in leaves if l.score <= 0.01 * current.score],
+                        key=lambda F: i.howfar(current, F))[
                         0]
         except:
             return testInst.values.tolist()[0]
@@ -124,7 +131,8 @@ class Patches:
             before = testInst[ii[0]]
             if not ii in current.branch:
                 then = testInst[ii[0]].values[0]
-                now = ii[1] if i.config else new(testInst[ii[0]].values[0], ii[1])
+                now = ii[1] if i.config else new(testInst[ii[0]].values[0],
+                                                 ii[1])
                 # print(current.branch,best.branch)
                 testInst[ii[0]] = now
                 C.save(name=ii[0], old=then, new=now)
@@ -148,9 +156,10 @@ def execute(train_DF, test_DF):
 
     # train_DF = list2dataframe(train)  # create a pandas dataframe of training data
     # test_DF = list2dataframe(test)  # create a pandas dataframe of testing data
-    tree = pyC45.dtree(train_DF) # Create a decision tree
+    tree = pyC45.dtree(train_DF)  # Create a decision tree
     # set_trace()
-    patch = Patches(train=None, test=None, trainDF=train_DF, testDF=test_DF, tree=tree)
+    patch = Patches(train=None, test=None, trainDF=train_DF, testDF=test_DF,
+                    tree=tree)
     return patch.main()
 
 
@@ -158,7 +167,7 @@ if __name__ == '__main__':
     E = []
     for name in ['ant']:  # , 'ivy', 'jedit', 'lucene', 'poi']:
         print("##", name)
-        train, test = explore(dir='../Data/Jureczko/', name=name)
+        train, test = explore(dir='../data/Jureczko/', name=name)
         aft = [name]
         for _ in xrange(10):
             aft.append(execute(train, test))

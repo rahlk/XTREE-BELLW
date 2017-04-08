@@ -282,7 +282,7 @@ class xtrees():
 def _planningTest():
   # Test contrast sets
   n = 0
-  Dir = 'Data/Jureczko/'
+  Dir = 'data/Jureczko/'
   one, two = explore(Dir)
   # Training data
   _ = xtrees(train=one[n],

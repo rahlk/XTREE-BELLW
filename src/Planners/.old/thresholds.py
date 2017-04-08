@@ -18,7 +18,7 @@ def VARL(coef,inter,p0=0.05):
 def thresholds():
   for name in ['ant', 'ivy', 'jedit', 'lucene', 'poi']:
     print("##", name)
-    train, test = explore(dir='../Data/Jureczko/', name=name)
+    train, test = explore(dir='../data/Jureczko/', name=name)
     data_DF=csv2DF(train, toBin=True)
     metrics=[str[1:] for str in data_DF[data_DF.columns[:-1]]]
     ubr = LogisticRegression()

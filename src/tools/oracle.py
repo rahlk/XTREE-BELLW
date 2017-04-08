@@ -1,18 +1,19 @@
 from __future__ import division
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-from collections import Counter
-from scipy.spatial.distance import euclidean
-from random import choice, seed as rseed, uniform as rand
-import pandas as pd
-import numpy as np
-from texttable import Texttable
-from stats import abcd
-from misc import *
-from pdb import set_trace
-from sklearn.neighbors import NearestNeighbors, BallTree, KDTree
-from sklearn.svm import SVC, SVR
+
 import warnings
+from collections import Counter
+from pdb import set_trace
+from random import choice, uniform as rand
 from time import time
+
+import pandas as pd
+from scipy.spatial.distance import euclidean
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+from sklearn.neighbors import BallTree
+from sklearn.svm import SVC, SVR
+
+from misc import *
+
 warnings.filterwarnings('ignore')
 
 def SMOTE(data=None, atleast=50, atmost=100, a=None,b=None, k=5, resample=False):
@@ -103,7 +104,7 @@ def SMOTE(data=None, atleast=50, atmost=100, a=None,b=None, k=5, resample=False)
 
 def _smote():
   "Test SMOTE"
-  dir = '../Data/Jureczko/camel/camel-1.6.csv'
+  dir = '../data/Jureczko/camel/camel-1.6.csv'
   Tbl = csv2DF([dir], as_mtx=False)
   newTbl = SMOTE(Tbl)
   print('Before SMOTE: ', Counter(Tbl[Tbl.columns[-1]]))
@@ -192,7 +193,7 @@ def SVM(train, test, tunings=None, smoteit=True, bin=True, regress=False):
 
 
 def _RF():
-  dir = '../Data/Jureczko/'
+  dir = '../data/Jureczko/'
   train, test = explore(dir)
   print('Dataset, Expt(F-Score)')
   for tr,te in zip(train, test):

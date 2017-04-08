@@ -102,7 +102,7 @@ def where2prd(train, test, tunings=[None, None], smoteit=False, thresh=1):
 
 def _where2pred():
   "Test where2"
-  dir = '../Data'
+  dir = '../data'
   one, two = explore(dir)
   # set_trace()
   # Training data
@@ -164,7 +164,7 @@ def rforest2(train, test, tunings=None, smoteit=True, duplicate=True):
 
 def _RF():
   "Test RF"
-  dir = '../Data'
+  dir = '../data'
   one, two = explore(dir)
   # Training data
   train_DF = createTbl([one[0][0]])
@@ -204,7 +204,7 @@ def CART(train, test, tunings=None, smoteit=True, duplicate=True):
 
 def _CART():
   "Test CART"
-  dir = './Data'
+  dir = './data'
   one, two = explore(dir)
   # Training data
   train_DF = createTbl(one[0])
@@ -233,7 +233,7 @@ def adaboost(train, test, smoteit=True):
 
 def _adaboost():
   "Test AdaBoost"
-  dir = './Data'
+  dir = './data'
   one, two = explore(dir)
   # Training data
   train_DF = createTbl(one[0])
@@ -264,7 +264,7 @@ def logit(train, test, smoteit=True):
 
 def _logit():
   "Test LOGIT"
-  dir = './Data'
+  dir = './data'
   one, two = explore(dir)
   # Training data
   train_DF = createTbl(one[0])

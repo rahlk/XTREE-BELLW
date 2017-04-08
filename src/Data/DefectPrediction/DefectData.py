@@ -11,17 +11,17 @@ class _Data:
 
     def __init__(self, dataName='ant', type='jur'):
         if type == 'jur':
-            dir = os.path.join(root, "Data/DefectPrediction/Jureczko")
+            dir = os.path.join(root, "data/DefectPrediction/Jureczko")
             bell = 'lucene'
         elif type == 'nasa':
-            dir = os.path.join(root, "Data/DefectPrediction/mccabe")
+            dir = os.path.join(root, "data/DefectPrediction/mccabe")
             bell = 'mc'
         elif type == 'aeeem':
-            dir = os.path.join(root, "Data/DefectPrediction/AEEEM")
+            dir = os.path.join(root, "data/DefectPrediction/AEEEM")
             bell = 'LC'
         elif type == "relink":
             bell = 'Safe'
-            dir = os.path.join(root, "Data/DefectPrediction/Relink")
+            dir = os.path.join(root, "data/DefectPrediction/Relink")
 
         self.data = glob(os.path.join(dir, dataName, "*.csv"))
         self.bellw = bell

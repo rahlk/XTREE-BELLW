@@ -250,14 +250,14 @@ def alves10(train, test, rftrain=None, tunings=None, verbose=False):
 def _testAlves():
   for name in ['ant', 'ivy', 'jedit', 'lucene', 'poi']:
     print("##", name, '\n')
-    train, test = explore(dir='../Data/Jureczko/', name=name)
+    train, test = explore(dir='../data/Jureczko/', name=name)
     alves10(train, test, verbose=True)
 
 def __testAll():
   for name in ['ant', 'ivy', 'jedit', 'lucene', 'poi']:
     E = []
     print("##", name)
-    train, test = explore(dir='../Data/Jureczko/', name=name)
+    train, test = explore(dir='../data/Jureczko/', name=name)
     # E.append(shatnawi10(train, test, verbose=False))
     # E.append(alves10(train, test, verbose=False))
     E.append(['CD'])

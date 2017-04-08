@@ -244,7 +244,7 @@ class treatments():
 
 
 def testPlanner2():
-  dir = '../Data'
+  dir = '../data'
   one, two = explore(dir)
   fWeight = treatments(one[0], two[0]).fWeight(criterion='Variance')
   set_trace()

@@ -103,7 +103,7 @@ def _Abcd(before=None, after=None, show=False):
 
 """
 output:
- $ python abcd.py
+ $ python ABCD.py
 # db                   rx           n     a    b    c   d    acc pd  pf  prec f  g  class
 ----------------------------------------------------------------------------------------------------
 # randomIn             jiggle       22    0    5    5   17   63  77 100  77  77   0 a

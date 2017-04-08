@@ -19,7 +19,7 @@ def get_train_test(dataname="Jureczko"):
     :return: 
     """
     source, target = [], []
-    projects = [p for p in glob(os.path.join(root, "Data", dataname, "*")) if os.path.isdir(p)]
+    projects = [p for p in glob(os.path.join(root, "data", dataname, "*")) if os.path.isdir(p)]
     for f_name in projects:
         data = glob(os.path.join(f_name, "*.csv"))
         source.append(data[:-1])

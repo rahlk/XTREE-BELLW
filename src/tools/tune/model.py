@@ -1,6 +1,8 @@
 from __future__ import division, print_function
-import os, sys, subprocess
-from time import time
+
+import subprocess
+import sys
+
 # Get the git root directory
 root=repo_dir = subprocess.Popen(['git'
                                       ,'rev-parse'
@@ -9,11 +11,10 @@ root=repo_dir = subprocess.Popen(['git'
                                     ).communicate()[0].rstrip()
 sys.path.append(root)
 
-import numpy as np
 from random import uniform
 from tools.oracle import rforest
 from tools.misc import *
-from tools.stats import ABCD
+from Utils.StatsUtils import ABCD
 
 class rf:
   """

@@ -313,7 +313,7 @@ class strawman():
 
 
 def categorize(dataName):
-  dir = '../Data/Jureczko'
+  dir = '../data/Jureczko'
   projects = [Name for _, Name, __ in walk(dir)][0]
   numData = len(projects)  # Number of data
   one, two = explore(dir)

@@ -10,7 +10,7 @@ sys.dont_write_bytecode = True
 from lib import *
 """
 
-Data:
+data:
 Possible Splits= ["variance", "centroid", "median"]
 """
 def run(weighFeature = False, split = "median"):
