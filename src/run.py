@@ -8,6 +8,7 @@ root = os.path.join(os.getcwd().split('src')[0], 'src')
 if root not in sys.path:
     sys.path.append(root)
 
+import Misc.logo
 import numpy as np
 from ipdb import set_trace
 from Experiments import Exp2
