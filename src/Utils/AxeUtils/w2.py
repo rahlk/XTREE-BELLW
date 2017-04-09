@@ -9,6 +9,7 @@ WHERE2 updated an older where with new Python tricks.
 ## Standard Header Stuff
 
 """
+
 from __future__ import division, print_function
 
 import os
@@ -19,13 +20,17 @@ root = os.path.join(os.getcwd().split('src')[0], 'src')
 if root not in sys.path:
     sys.path.append(root)
 
-from tools.axe.demos import *
-from tools.axe.nasa93 import *
+from ipdb import set_trace
+
+from Utils.AxeUtils import atom
+try:
+    from tools.axe import nasa93
+except ImportError:
+    set_trace()
 from tools.axe.settingsWhere import *
 
 sys.dont_write_bytecode = True
 
-sys.path.insert(0, '/Users/rkrsn/git/axe/axe/')
 
 """
 

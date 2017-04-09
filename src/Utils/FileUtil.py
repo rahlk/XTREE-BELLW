@@ -8,10 +8,9 @@ root = os.path.join(os.getcwd().split('src')[0], 'src')
 if root not in sys.path:
     sys.path.append(root)
 
-from pdb import set_trace
+from ipdb import set_trace
 from pandas import read_csv, concat
 from pandas.io.common import EmptyDataError
-from tools.axe.dtree import *
 from AxeUtils.w2 import where2, prepare, leaves
 from AxeUtils.MakeAModel import MakeAModel
 
@@ -26,6 +25,9 @@ def new_table(tbl, headerLabel, Rows):
 
 
 def list2dataframe(lst):
+    """
+    Convert a list of paths to pandas dataframe
+    """
     try:
         data = [read_csv(elem) for elem in lst]
     except EmptyDataError:

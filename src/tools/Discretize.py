@@ -14,7 +14,7 @@ import pandas as pd
 from collections import Counter
 from misc import *
 import numpy as np
-from pdb import set_trace
+from ipdb import set_trace
 from sklearn.tree import DecisionTreeClassifier as CART
 
 

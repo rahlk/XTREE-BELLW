@@ -1,7 +1,7 @@
 import os
 import sys
 from glob import glob
-from pdb import set_trace
+from ipdb import set_trace
 
 root = os.path.join(os.getcwd().split('src')[0], 'src')
 if root not in sys.path:

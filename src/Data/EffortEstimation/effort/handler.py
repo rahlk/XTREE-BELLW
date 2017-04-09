@@ -6,7 +6,7 @@ if root not in sys.path:
     sys.path.append(root)
 from utils import explore
 from old.methods1 import createTbl
-from pdb import set_trace
+from ipdb import set_trace
 
 
 class _Data:

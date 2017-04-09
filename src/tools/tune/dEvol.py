@@ -3,7 +3,7 @@ from model import rf
 import numpy as np
 import random
 from time import time
-from pdb import set_trace
+from ipdb import set_trace
 
 class settings:
   iter=50

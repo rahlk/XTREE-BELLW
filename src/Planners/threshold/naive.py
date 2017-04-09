@@ -1,18 +1,16 @@
 """
 XTREE
-"""
-from __future__ import print_function, division
-# import pandas as pd, numpy as np
-# from pdb import set_trace
+"""from __future__ import print_function, division
 
 import sys
+
+# import pandas as pd, numpy as np
+# from ipdb import set_trace
 sys.path.append('..')
-from tools.oracle import *
 from sklearn.linear_model import LogisticRegression
-from sklearn.feature_selection import f_classif, f_regression
+from sklearn.feature_selection import f_classif
 from random import uniform
-from xtree import  xtree
-from tools.sk import rdivDemo
+from tools import rdivDemo
 from texttable import *
 from CD import method1
 # from tools.sk import *
@@ -137,7 +135,6 @@ def shatnawi10(train, test, rftrain=None, tunings=None, verbose=False):
 
 def alves10(train, test, rftrain=None, tunings=None, verbose=False):
   import numpy as np
-  import matplotlib.pyplot as plt
   data_DF=csv2DF(train, toBin=True)
   metrics=[str[1:] for str in data_DF[data_DF.columns[:-1]]]
   X = data_DF[data_DF.columns[:-1]].values # Independent Features (CK-Metrics)
@@ -267,7 +264,6 @@ def __testAll():
     print("\n")
 
 if __name__=="__main__":
-  from logo import logo
   __testAll()
   # _testAlves()
 

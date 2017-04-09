@@ -1,27 +1,28 @@
 import os
 import sys
 
-root = os.path.join(os.getcwd().split('src')[0], 'src')
+root = os.path.join("/".join(os.getcwd().split('/')[:-1]))
 if root not in sys.path:
     sys.path.append(root)
 from glob import glob
+from ipdb import set_trace
 
 class _Data:
     """Hold training and testing data"""
 
     def __init__(self, dataName='ant', type='jur'):
         if type == 'jur':
-            dir = os.path.join(root, "data/DefectPrediction/Jureczko")
+            dir = os.path.join(root, "Data/DefectPrediction/Jureczko")
             bell = 'lucene'
         elif type == 'nasa':
-            dir = os.path.join(root, "data/DefectPrediction/mccabe")
+            dir = os.path.join(root, "Data/DefectPrediction/mccabe")
             bell = 'mc'
         elif type == 'aeeem':
-            dir = os.path.join(root, "data/DefectPrediction/AEEEM")
+            dir = os.path.join(root, "Data/DefectPrediction/AEEEM")
             bell = 'LC'
         elif type == "relink":
             bell = 'Safe'
-            dir = os.path.join(root, "data/DefectPrediction/Relink")
+            dir = os.path.join(root, "Data/DefectPrediction/Relink")
 
         self.data = glob(os.path.join(dir, dataName, "*.csv"))
         self.bellw = bell

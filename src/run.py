@@ -9,7 +9,7 @@ if root not in sys.path:
     sys.path.append(root)
 
 import numpy as np
-from pdb import set_trace
+from ipdb import set_trace
 from Experiments import Exp2
 
 if __name__ == "__main__":

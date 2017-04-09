@@ -14,11 +14,10 @@ if root not in sys.path:
 
 from Data.DefectPrediction import DefectData
 from Utils.FileUtil import list2dataframe
-from XTREE import XTREE
-from oracle.model import rforest, xgboost, xgboost_grid_tuned
-from ExperimentUtils import pred_stats, impact
+from Planners.XTREE import xtree
+from oracle.model import rforest
+from Utils.ExperimentUtils import pred_stats, impact
 from Utils.StatsUtils.CrossVal import CrossValidation
-from pdb import set_trace
 
 
 def transfer_lessons(data=None):
@@ -42,21 +41,21 @@ def transfer_lessons(data=None):
                 bellw = list2dataframe(data[paths.bellw].data)
 
             for train_bellw, validation in CrossValidation.split(bellw,
-                                                                 ways=2):
+                                                                 ways=10):
                 train_local = list2dataframe(paths.data[:-1])
                 test = list2dataframe(paths.data[-1])
 
-                patched_local = XTREE.execute(train_local, test)
-                patched_bellw = XTREE.execute(train_bellw, test)
+                patched_local = xtree.execute(train_local, test)
+                patched_bellw = xtree.execute(train_bellw, test)
 
                 # How good are the patches from local lessons?
-                pred, distr = xgboost(validation, patched_local)
+                pred, distr = rforest(validation, patched_local)
 
                 # How good are the patches from the bellwether lessons?
-                pred2, distr2 = xgboost(validation, patched_bellw)
+                pred2, distr2 = rforest(validation, patched_bellw)
 
                 # How good are the predictions
-                pred3, distr3 = xgboost(validation, test)
+                pred3, distr3 = rforest(validation, test)
 
                 pred = pred_stats(before=test[test.columns[-1]],
                                   after=pred3,

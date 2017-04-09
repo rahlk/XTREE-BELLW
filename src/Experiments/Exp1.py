@@ -14,10 +14,10 @@ if root not in sys.path:
 
 from Data.DefectPrediction import DefectData
 from Utils.FileUtil import list2dataframe
-from XTREE import XTREE
+from Planners.XTREE import xtree
 from oracle.model import rforest
-from ExperimentUtils import pred_stats, impact
-from Utils.StatsUtils.CrossVal import CrossValidation
+from Utils.ExperimentUtils import pred_stats, impact
+
 
 def impact(test, pred):
     actuals = test[test.columns[-1]]
@@ -52,7 +52,7 @@ def transfer_lessons(n_folds=10):
                                                 test_size=0.8)
             # test = list2dataframe(paths.data[-1])
             # validation = list2dataframe(paths.data[:-1])
-            patched = XTREE.execute(train, test)
+            patched = xtree.execute(train, test)
             a, b = rforest(validation, patched)  # How good are the patches
             aa, bb = rforest(validation, test)  # How good are the predcitions
             pred.append(a)
@@ -83,7 +83,7 @@ def transfer_lessons3():
                                                 test_size=0.8)
             # test = list2dataframe(paths.data[-1])
             # validation = list2dataframe(paths.data[:-1])
-            patched = XTREE.execute(train, test)
+            patched = xtree.execute(train, test)
             a, b = rforest(train, patched)  # How good are the patches
             aa, bb = rforest(train, test)  # How good are the predcitions
             pred.append(a)
@@ -112,8 +112,8 @@ def transfer_lessons4():
             train_local = list2dataframe(paths.data[:-1])
             test = list2dataframe(paths.data[-1])
 
-            patched_local = XTREE.execute(train_local, test)
-            patched_bellw = XTREE.execute(train_bellw, test)
+            patched_local = xtree.execute(train_local, test)
+            patched_bellw = xtree.execute(train_bellw, test)
 
             pred, distr = rforest(train_bellw,
                                   patched_local)  # How good are the patches
@@ -143,7 +143,7 @@ def transfer_lessons2(n_folds=1):
                                                  test_size=0.8)
             test = paths.data[-1]
             validation = paths.data[:-1]
-            patched = XTREE.execute(train, test)
+            patched = xtree.execute(train, test)
             test = list2dataframe(test)
             pred, distr = rforest(validation,
                                   patched)  # How good are the patches
