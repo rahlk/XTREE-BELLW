@@ -45,8 +45,8 @@ def transfer_lessons(data=None):
                 train_local = list2dataframe(paths.data[:-1])
                 test = list2dataframe(paths.data[-1])
 
-                patched_local = xtree.execute(train_local, test)
-                patched_bellw = xtree.execute(train_bellw, test)
+                patched_local = xtree(train_local, test)
+                patched_bellw = xtree(train_bellw, test)
 
                 # How good are the patches from local lessons?
                 pred, distr = rforest(validation, patched_local)
