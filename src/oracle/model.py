@@ -94,7 +94,7 @@ def xgboost(train, target):
     clf.fit(source[features], klass)
     preds = clf.predict(target[target.columns[:-1]])
     distr = clf.predict_proba(target[target.columns[:-1]])[:, 1]
-
+    preds = [1 if val > 0.77 else 0 for val in distr]
     return preds, distr
 
 

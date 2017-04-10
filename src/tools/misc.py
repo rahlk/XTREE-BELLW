@@ -30,7 +30,7 @@ def csv2DF(dir, as_mtx=False, toBin=False):
   if as_mtx: return data_DF.as_matrix()
   else: return data_DF
 
-def explore(dir='../data/Jureczko/', name=None):
+def explore(dir='../data.dat/Jureczko/', name=None):
   datasets = []
   for (dirpath, dirnames, filenames) in walk(dir):
     datasets.append(dirpath)

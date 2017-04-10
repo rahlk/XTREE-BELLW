@@ -8,7 +8,7 @@ from counts import *
 from table  import *
 
 @demo
-def _discreteTable(f="data/weather2.csv"):
+def _discreteTable(f="data.dat/weather2.csv"):
   for row in  discreteTable(f)._rows:
     rprint(row)
 

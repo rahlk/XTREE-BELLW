@@ -44,7 +44,7 @@ def create_tbl(
         duplicate=False):
     """
     kwargs:
-    _smote = True/False : SMOTE input data (or not)
+    _smote = True/False : SMOTE input data.dat (or not)
     _isBin = True/False : Reduce bugs to defects/no defects
     _bugThres = int : Threshold for marking stuff as defective,
                       default = 1. Not defective => Bugs < 1
@@ -75,7 +75,7 @@ def create_tbl(
 
 
 def test_createTbl():
-    dir = '../data/camel/camel-1.6.csv'
+    dir = '../data.dat/camel/camel-1.6.csv'
     newTbl = create_tbl([dir], _smote=False)
     newTblSMOTE = create_tbl([dir], _smote=True)
     print(len(newTbl._rows), len(newTblSMOTE._rows))

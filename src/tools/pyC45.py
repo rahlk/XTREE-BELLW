@@ -195,7 +195,7 @@ def leaves(tree):
 
 
 def _test():
-    tbl_loc = explore(dir='../data/Seigmund/', name='Apache')
+    tbl_loc = explore(dir='../data.dat/Seigmund/', name='Apache')
     tbl = csv2DF(tbl_loc)
 
     # Define Tree settings

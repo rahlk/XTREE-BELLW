@@ -48,6 +48,6 @@ if __name__ == "__main__":
               , np.percentile(value["bellw"], 25, axis=0)
               , np.percentile(value["bellw"], 75, axis=0)
               , sep="\t")
-              # , file=open(os.path.join(root, "plot_data/exp2/data"), "a+"))
+              # , file=open(os.path.join(root, "plot_data/exp2/data.dat"), "a+"))
 
     set_trace()

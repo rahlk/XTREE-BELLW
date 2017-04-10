@@ -9,7 +9,7 @@ from glob import glob
 from ipdb import set_trace
 
 class _Data:
-    """Hold training and testing data"""
+    """Hold training and testing data.dat"""
 
     def __init__(self, dataName='ant', type='jur'):
         if type == 'jur':

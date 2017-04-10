@@ -13,9 +13,10 @@ if root not in sys.path:
     sys.path.append(root)
 
 from tools import pyC45
-from random import uniform
+from random import uniform, random as rand
 from pdb import set_trace
 import pandas as pd
+from oracle.smote import SMOTE
 from Utils.FileUtil import list2dataframe
 def trueValue(all, test):
     set_trace()
@@ -145,8 +146,9 @@ class Patches:
         for n in xrange(i.testDF.shape[0]):
             if i.testDF.iloc[n][-1] > 0 or i.testDF.iloc[n][-1] == True:
                 newRows.append(i.patchIt(i.testDF.iloc[n]))
-            # else:
-            #     newRows.append(i.testDF.iloc[n].tolist())
+            else:
+                if rand()>0.7:
+                    newRows.append(i.testDF.iloc[n].tolist())
         return pd.DataFrame(newRows, columns=i.testDF.columns)
 
 
@@ -154,11 +156,13 @@ def xtree(train_df, test_df):
     """XTREE"""
 
     if isinstance(train_df, list):
-        train_df = list2dataframe(train_df)  # create a pandas dataframe of training data
+        train_df = list2dataframe(train_df)  # create a pandas dataframe of training data.dat
     if isinstance(test_df, list):
-        test_df = list2dataframe(test_df)  # create a pandas dataframe of testing data
+        test_df = list2dataframe(test_df)  # create a pandas dataframe of testing data.dat
     if isinstance(test_df, basestring):
-        test_df = list2dataframe([test_df])  # create a pandas dataframe of testing data
+        test_df = list2dataframe([test_df])  # create a pandas dataframe of testing data.dat
+
+    train_df = SMOTE(train_df,atleast=1000, atmost=1001)
 
     tree = pyC45.dtree(train_df)  # Create a decision tree
 

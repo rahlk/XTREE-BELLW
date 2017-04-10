@@ -10,7 +10,7 @@ sys.dont_write_bytecode = True
 from lib import *
 
 """
-data
+data.dat
 """
 
 def run(weighFeature = False, 

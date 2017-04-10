@@ -19,12 +19,12 @@ from nasa93 import *
 
 ## Dimensionality Reduction with Fastmp
 
-Project data in N dimensions down to a single dimension connecting
-twp distant points. Divide that data at the median of those projects.
+Project data.dat in N dimensions down to a single dimension connecting
+twp distant points. Divide that data.dat at the median of those projects.
 
 """
 def fastmap(m,data):
-  "Divide data into two using distance to two distant items."
+  "Divide data.dat into two using distance to two distant items."
   import random
   random.seed(1)
   one  = any(data)             # 1) pick anything
@@ -113,7 +113,7 @@ def closest(m,i,all):
 
 
 WHERE2 finds everyone's else's distance from the poles
-  and divide the data on the mean point of those
+  and divide the data.dat on the mean point of those
   distances.  This all stops if:
 
 +  Any division has _tooFew_ solutions (say,
@@ -195,8 +195,8 @@ def where2(m, data, lvl=0, up=None):
 ## An Experimental Extensions
 
 Lately I've been experimenting with a system that
-prunes as it divides the data. GALE checks for
-domination between the poles and ignores data in
+prunes as it divides the data.dat. GALE checks for
+domination between the poles and ignores data.dat in
 halves with a dominated pole. This means that for
 _N_ solutions we only ever have to evaluate
 _2*log(N)_ of them- which is useful if each

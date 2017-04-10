@@ -36,8 +36,8 @@ sys.dont_write_bytecode = True
 
 ## Dimensionality Reduction with Fastmap
 
-Project data in N dimensions down to a single dimension connecting
-twp distant points. Divide that data at the median of those projects.
+Project data.dat in N dimensions down to a single dimension connecting
+twp distant points. Divide that data.dat at the median of those projects.
 
 """
 
@@ -75,12 +75,12 @@ def allpairs(m, data):
 
 
 def fastmap(m, data):
-    "Divide data into two using distance to two distant items."
+    "Divide data.dat into two using distance to two distant items."
     west, east = somepairs(m, data)
     """
-    one = any(data)  # 1) pick anything
-    west = furthest(m, one, data)  # 2) west is as far as you can go from anything
-    east = furthest(m, west, data)  # 3) east is as far as you can go from west
+    one = any(data.dat)  # 1) pick anything
+    west = furthest(m, one, data.dat)  # 2) west is as far as you can go from anything
+    east = furthest(m, west, data.dat)  # 3) east is as far as you can go from west
     """
     c = dist(m, west, east) + 1e-5
     # now find everyone's distance
@@ -189,7 +189,7 @@ def closest(m, i, all):
 
 
 WHERE2 finds everyone's else's distance from the poles
-  and divide the data on the mean point of those
+  and divide the data.dat on the mean point of those
   distances.  This all stops if:
 
 +  Any division has _tooFew_ solutions (say,
@@ -282,8 +282,8 @@ def where2(m, data, lvl=0, up=None, verbose=False):
 ## An Experimental Extensions
 
 Lately I've been experimenting with a system that
-prunes as it divides the data. GALE checks for
-domination between the poles and ignores data in
+prunes as it divides the data.dat. GALE checks for
+domination between the poles and ignores data.dat in
 halves with a dominated pole. This means that for
 _N_ solutions we only ever have to evaluate
 _2*log(N)_ of them- which is useful if each

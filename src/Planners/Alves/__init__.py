@@ -20,6 +20,7 @@ import numpy as np
 from Utils.ExperimentUtils import apply2
 import pandas as pd
 from ipdb import set_trace
+from random import random as rand
 from Utils.FileUtil import list2dataframe
 
 def _ent_weight(X, scale):
@@ -88,17 +89,14 @@ def alves(train, test):
     """ 
     Apply Plans Sequentially
     """
-    n_change = len([c for c in cutoff if c > 0])
-    buggy = [test.iloc[n].values.tolist() for n in xrange(test.shape[0]) if
-             test.iloc[n][-1] > 0]
 
     modified = []
+    for n in xrange(test.shape[0]):
+        if test.iloc[n][-1] > 0 or test.iloc[n][-1] == True:
+            modified.append(apply2(cutoff, test.iloc[n].values.tolist()))
+        else:
+            if rand() > 0.7:
+                modified.append(test.iloc[n].tolist())
 
-    for attr in buggy:
-        try:
-            modified.append(apply2(cutoff, attr))
-        except:
-            set_trace()
+    return pd.DataFrame(modified, columns=test.columns)
 
-    modified = pd.DataFrame(modified, columns=train.columns)
-    return modified

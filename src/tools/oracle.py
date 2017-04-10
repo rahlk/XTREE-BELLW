@@ -77,8 +77,8 @@ def SMOTE(data=None, atleast=50, atmost=100, a=None,b=None, k=5, resample=False)
     # if resample:
     #   newer = []
     #   for _ in xrange(atmost):
-    #     orig = choice(data)
-    #     newer.append(extrapolate(orig, knn(orig, data)[1]))
+    #     orig = choice(data.dat)
+    #     newer.append(extrapolate(orig, knn(orig, data.dat)[1]))
     #   return newer
     # else:
       return [choice(data).tolist() for _ in xrange(atmost)]
@@ -104,7 +104,7 @@ def SMOTE(data=None, atleast=50, atmost=100, a=None,b=None, k=5, resample=False)
 
 def _smote():
   "Test SMOTE"
-  dir = '../data/Jureczko/camel/camel-1.6.csv'
+  dir = '../data.dat/Jureczko/camel/camel-1.6.csv'
   Tbl = csv2DF([dir], as_mtx=False)
   newTbl = SMOTE(Tbl)
   print('Before SMOTE: ', Counter(Tbl[Tbl.columns[-1]]))
@@ -193,7 +193,7 @@ def SVM(train, test, tunings=None, smoteit=True, bin=True, regress=False):
 
 
 def _RF():
-  dir = '../data/Jureczko/'
+  dir = '../data.dat/Jureczko/'
   train, test = explore(dir)
   print('Dataset, Expt(F-Score)')
   for tr,te in zip(train, test):

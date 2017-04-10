@@ -10,19 +10,19 @@ from ipdb import set_trace
 
 
 class _Data:
-    """Hold training and testing data"""
+    """Hold training and testing data.dat"""
 
     def __init__(self, dataName='ant', type='jur'):
         if type == 'jur':
-            dir = os.path.join(root, "data/Jureczko")
+            dir = os.path.join(root, "data.dat/Jureczko")
         elif type == 'nasa':
-            dir = os.path.join(root, "data/mccabe")
+            dir = os.path.join(root, "data.dat/mccabe")
         elif type == 'aeeem':
-            dir = os.path.join(root, "data/AEEEM")
+            dir = os.path.join(root, "data.dat/AEEEM")
         elif type == "relink":
-            dir = os.path.join(root, "data/Relink")
+            dir = os.path.join(root, "data.dat/Relink")
         elif type == 'other':
-            dir = os.path.join(root, "data/other/")
+            dir = os.path.join(root, "data.dat/other/")
 
         data = explore(dir)
         for d in data:

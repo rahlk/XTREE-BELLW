@@ -10,14 +10,14 @@ sys.dont_write_bytecode = True
 from  lib import *
 """
 
-data:
+data.dat:
 
 """
 def run(weighFeature = False,split="median"):
   vl=1;l=2;n=3;h=4;vh=5;xh=6;_=0
   return data(indep= [
      # 0..8
-     'Prec','Flex','Resl','Team','Pmat','rely','cplx','data','ruse',
+     'Prec','Flex','Resl','Team','Pmat','rely','cplx','data.dat','ruse',
      # 9 .. 17
      'time','stor','pvol','acap','pcap','pcon','aexp','plex','ltex',
      # 18 .. 25

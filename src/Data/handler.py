@@ -15,11 +15,11 @@ if root not in sys.path:
 def get_train_test(dataname="Jureczko"):
     """
     Get training and testing datasets
-    :param dataname: Source of data
+    :param dataname: Source of data.dat
     :return: 
     """
     source, target = [], []
-    projects = [p for p in glob(os.path.join(root, "data", dataname, "*")) if os.path.isdir(p)]
+    projects = [p for p in glob(os.path.join(root, "data.dat", dataname, "*")) if os.path.isdir(p)]
     for f_name in projects:
         data = glob(os.path.join(f_name, "*.csv"))
         source.append(data[:-1])

@@ -88,7 +88,7 @@ def xtile(lst, lo=0, hi=1, width=50,
   unsorted numbers and presents them as a horizontal
   xtile chart (in ascii format). The default is a
   contracted _quintile_ that shows the
-  10,30,50,70,90 breaks in the data (but this can be
+  10,30,50,70,90 breaks in the data.dat (but this can be
   changed- see the optional flags of the function).
   """
   def pos(p):
@@ -340,7 +340,7 @@ def bootstrap(y0, z0, conf=0.01, b=1000):
     introduction to the boostrap."""
   class total():
 
-    "quick and dirty data collector"
+    "quick and dirty data.dat collector"
     def __init__(i, some=[]):
       i.sum = i.n = i.mu = 0
       i.all = []
@@ -409,7 +409,7 @@ _bootstraped()
 ````
 
 Warning- the above took 8 seconds to generate since we used 1000 bootstraps.
-As to how many bootstraps are enough, that depends on the data. There are
+As to how many bootstraps are enough, that depends on the data.dat. There are
 results saying 200 to 400 are enough but, since I am  suspicious man, I run it for 1000.
 
 Which means the runtimes associated with bootstrapping is a significant issue.
@@ -454,7 +454,7 @@ For examples on using this code, see _rdivDemo_ (below).
 
 
 def scottknott(data, cohen=0.3, small=3, useA12=False, epsilon=0.01):
-  """Recursively split data, maximizing delta of
+  """Recursively split data.dat, maximizing delta of
   the expected value of the mean before and
   after the splits.
   Reject splits with under 3 items"""
@@ -467,12 +467,12 @@ def scottknott(data, cohen=0.3, small=3, useA12=False, epsilon=0.01):
 
 
 def rdiv(data,  # a list of class Nums
-         all,  # all the data combined into one num
+         all,  # all the data.dat combined into one num
          div,  # function: find the best split
          big,  # function: rejects small splits
          same,  # function: rejects similar splits
          epsilon):  # small enough to split two parts
-  """Looks for ways to split sorted data,
+  """Looks for ways to split sorted data.dat,
   Recurses into each split. Assigns a 'rank' number
   to all the leaf splits found in this way.
   """
@@ -524,7 +524,7 @@ def leftRight(parts, epsilon=0.01):
   """Iterator. For all items in 'parts',
   return everything to the left and everything
   from here to the end. For reasons of
-  efficiency, take a first pass over the data
+  efficiency, take a first pass over the data.dat
   to pre-compute and cache right-hand-sides
   """
   rights = {}

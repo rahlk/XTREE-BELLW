@@ -59,9 +59,7 @@ def __test_fontana(data):
 
 def run_all_tests():
     data = DefectData.get_all_projects()["Apache"]["ant"]
-    # __test_alves(data)
-    # __test_shatnawi(data)
-    __test_xtree(data)
+    __test_oliveira(data)
 
 
 if __name__ == "__main__":

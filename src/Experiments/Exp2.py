@@ -15,7 +15,7 @@ if root not in sys.path:
 from Data.DefectPrediction import DefectData
 from Utils.FileUtil import list2dataframe
 from Planners.XTREE import xtree
-from oracle.model import rforest
+from oracle.model import xgboost
 from Utils.ExperimentUtils import pred_stats, impact
 from Utils.StatsUtils.CrossVal import CrossValidation
 
@@ -34,37 +34,34 @@ def transfer_lessons(data=None):
                 "local": [],
                 "bellw": []}
             }
-            pred, pred2, distr, distr2 = [], [], [], []
 
-            "If training data doesn't exist, create it."
-            if "bellw" not in locals():
-                bellw = list2dataframe(data[paths.bellw].data)
+            bellw = list2dataframe(data[paths.bellw].data)
 
             for train_bellw, validation in CrossValidation.split(bellw,
-                                                                 ways=10):
+                                                                 ways=5):
                 train_local = list2dataframe(paths.data[:-1])
                 test = list2dataframe(paths.data[-1])
 
                 patched_local = xtree(train_local, test)
-                patched_bellw = xtree(train_bellw, test)
+                patched_bellw = xtree(train_bellw, list2dataframe(paths.data))
 
                 # How good are the patches from local lessons?
-                pred, distr = rforest(validation, patched_local)
+                pred_local, distr_local = xgboost(validation, patched_local)
 
                 # How good are the patches from the bellwether lessons?
-                pred2, distr2 = rforest(validation, patched_bellw)
+                pred_bellw, distr_bellw = xgboost(validation, patched_bellw)
 
                 # How good are the predictions
-                pred3, distr3 = rforest(validation, test)
+                pred_qual, distr_qual = xgboost(validation, test)
 
                 pred = pred_stats(before=test[test.columns[-1]],
-                                  after=pred3,
-                                  distr=distr3)
+                                  after=pred_qual,
+                                  distr=distr_qual)
 
                 res[proj[:6]]["pd"].append(pred[0])
                 res[proj[:6]]["pf"].append(pred[1])
 
-                res[proj[:6]]["local"].append(impact(test, pred))
-                res[proj[:6]]["bellw"].append(impact(test, pred2))
+                res[proj[:6]]["local"].append(impact(test, pred_local))
+                res[proj[:6]]["bellw"].append(impact(test, pred_bellw))
 
             yield res

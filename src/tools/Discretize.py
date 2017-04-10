@@ -134,12 +134,12 @@ def discreteTbl(tbl, B=0.33, Prune=True):
   
     Parameters:
   
-    tbl   - A Pandas data Frame
+    tbl   - A Pandas data.dat Frame
     B     - Cutoff for Pruning Columns (float between 0,1)
     Prune - Prune (True/False)
   
     Returns:
-    Pandas data Frame: Discretized table
+    Pandas data.dat Frame: Discretized table
     """
     dtable = []
     fweight = fWeight(tbl)

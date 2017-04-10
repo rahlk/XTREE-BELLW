@@ -42,7 +42,7 @@ def transfer_lessons(n_folds=10):
     for proj, paths in data.iteritems():
         if not proj in paths.bellw:
             res = {proj[:6]: []}
-            "If training data doesn't exist, create it."
+            "If training data.dat doesn't exist, create it."
             pred, pred2, distr, distr2 = [], [], [], []
 
             if not "train" in locals():
@@ -50,8 +50,8 @@ def transfer_lessons(n_folds=10):
 
             test, validation = train_test_split(list2dataframe(paths.data),
                                                 test_size=0.8)
-            # test = list2dataframe(paths.data[-1])
-            # validation = list2dataframe(paths.data[:-1])
+            # test = list2dataframe(paths.data.dat[-1])
+            # validation = list2dataframe(paths.data.dat[:-1])
             patched = xtree.execute(train, test)
             a, b = rforest(validation, patched)  # How good are the patches
             aa, bb = rforest(validation, test)  # How good are the predcitions
@@ -73,7 +73,7 @@ def transfer_lessons3():
     for proj, paths in data.iteritems():
         if not proj in paths.bellw:
             res = {proj[:6]: []}
-            "If training data doesn't exist, create it."
+            "If training data.dat doesn't exist, create it."
             pred, pred2, distr, distr2 = [], [], [], []
 
             if not "train" in locals():
@@ -81,8 +81,8 @@ def transfer_lessons3():
 
             test, validation = train_test_split(list2dataframe(paths.data),
                                                 test_size=0.8)
-            # test = list2dataframe(paths.data[-1])
-            # validation = list2dataframe(paths.data[:-1])
+            # test = list2dataframe(paths.data.dat[-1])
+            # validation = list2dataframe(paths.data.dat[:-1])
             patched = xtree.execute(train, test)
             a, b = rforest(train, patched)  # How good are the patches
             aa, bb = rforest(train, test)  # How good are the predcitions
@@ -103,7 +103,7 @@ def transfer_lessons4():
     for proj, paths in data.iteritems():
         if not proj in paths.bellw:
             res = {proj[:6]: []}
-            "If training data doesn't exist, create it."
+            "If training data.dat doesn't exist, create it."
             pred, pred2, distr, distr2 = [], [], [], []
 
             if not "train_bellw" in locals():
@@ -137,7 +137,7 @@ def transfer_lessons2(n_folds=1):
     for proj, paths in data.iteritems():
         if not proj in paths.bellw:
             print(proj[:4], end="\t")
-            "If training data doesn't exist, create it."
+            "If training data.dat doesn't exist, create it."
 
             train, validation = train_test_split(list2dataframe(paths.data),
                                                  test_size=0.8)

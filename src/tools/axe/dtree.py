@@ -299,7 +299,7 @@ def snakesAndLadders(tree, train, w):
 
 
 @demo
-def tdived(file='data/diabetes.csv'):
+def tdived(file='data.dat/diabetes.csv'):
   tbl = discreteTable(file)
   # exit()
   tree = tdiv(tbl)
@@ -307,7 +307,7 @@ def tdived(file='data/diabetes.csv'):
 
 
 @demo
-def cross(file='data/housingD.csv', rseed=1):
+def cross(file='data.dat/housingD.csv', rseed=1):
   def klass(test):
     return test.cells[train.klass[0].col]
   seed(rseed)
@@ -337,7 +337,7 @@ ninf = float("-inf")
 
 
 @demo
-def snl(file='data/poi-1.5D.csv', rseed=1, w=dict(_1=0, _0=1)):
+def snl(file='data.dat/poi-1.5D.csv', rseed=1, w=dict(_1=0, _0=1)):
   def klass(x):
     return x.cells[train.klass[0].col]
 

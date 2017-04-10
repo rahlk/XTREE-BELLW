@@ -120,7 +120,7 @@ def run_model(model=MODEL, cross_val=3):
   }
   mdl=model()
   print('###'+model.__name__.upper())
-  print('####'+str(len(mdl._rows)) + " data points,  " + str(len(mdl.indep)) + " attributes")
+  print('####'+str(len(mdl._rows)) + " data.dat points,  " + str(len(mdl.indep)) + " attributes")
   all_rows = mdl._rows
   print("```")
   for inp in split_data(all_rows, cross_val):
@@ -156,7 +156,7 @@ def testRunner(model=MODEL, cross_val=21):
   }
   mdl=model()
   print('###'+model.__name__.upper())
-  print('####'+str(len(mdl._rows)) + " data points,  " + str(len(mdl.indep)) + " attributes")
+  print('####'+str(len(mdl._rows)) + " data.dat points,  " + str(len(mdl.indep)) + " attributes")
   print("```")
   all_rows = mdl._rows
   for inp in split_data(all_rows, cross_val):
@@ -178,7 +178,7 @@ def untuned_runner(model=MODEL, cross_val=21):
   }
   mdl=model()
   print('###'+model.__name__.upper())
-  print('####'+str(len(mdl._rows)) + " data points,  " + str(len(mdl.indep)) + " attributes")
+  print('####'+str(len(mdl._rows)) + " data.dat points,  " + str(len(mdl.indep)) + " attributes")
   all_rows = mdl._rows
   print("```")
   for inp in split_data(all_rows, cross_val):
