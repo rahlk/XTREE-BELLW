@@ -113,9 +113,8 @@ def oliveira(train, test):
     for n in xrange(test.shape[0]):
         C = Changes()
         if test.iloc[n][-1] > 0 or test.iloc[n][-1] == True:
-            old_row = test.iloc[n].values.tolist()
             new_row = apply3(test.iloc[n].values.tolist(), test.columns, pk_best)
-            for name, new, old in zip(test.columns, new_row, old_row):
+            for name, new, old in zip(test.columns, new_row, test.iloc[n].values.tolist()):
                 C.save(name, new=new, old=old)
 
             changes.append(C.log)
