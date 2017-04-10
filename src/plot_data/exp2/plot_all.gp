@@ -9,5 +9,5 @@ set ylabel "Value in %"
 set xtics nomirror rotate by -45 offset character 0, 0, 0     norangelimit
 set size ratio 1
 set key inside vert right bottom noreverse noenhanced autotitle nobox
-plot "data2" using 1:3:4:5:xticlabels(2) with yerrorbars lw 2 title "Bellwether", \
-     "data2" using ($1+0.25):6:7:8 with errorbars lw 2 title "Local"
+plot "data" using 1:3:4:5:xticlabels(2) with yerrorbars lw 2 title "Bellwether", \
+     "data" using ($1+0.25):6:7:8 with errorbars lw 2 title "Local"
