@@ -15,9 +15,10 @@ if root not in sys.path:
 import numpy as np
 import pandas as pd
 from ipdb import set_trace
+from random import random as rand
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_selection import f_classif
-from Utils.ExperimentUtils import apply2
+from Utils.ExperimentUtils import apply2, Changes
 from Utils.FileUtil import list2dataframe
 
 
@@ -57,6 +58,7 @@ def shatnawi(train, test):
     if isinstance(train, list):
         train = list2dataframe(train)
 
+    changed =[]
     metrics = [str[1:] for str in train[train.columns[:-1]]]
     ubr = LogisticRegression()  # Init LogisticRegressor
     X = train[
@@ -73,15 +75,29 @@ def shatnawi(train, test):
     for Coeff, P_Val, idx in zip(coef, pVal,
                                  range(len(metrics))):  # xrange(len(metrics)):
         thresh = VARL(Coeff, inter, p0=0.065)  # VARL p0=0.05 (95% CI)
-        if thresh > 0 and P_Val < 0.05:
+        if P_Val < 0.05:
             changes[idx] = thresh
 
-    "Apply Plans Sequentially"
-    buggy = [test.iloc[n].values.tolist() for n in xrange(test.shape[0]) if
-             test.iloc[n][-1] > 0]
-    modified = []
-    for attr in buggy:
-        modified.append(apply2(changes, attr))
+    # set_trace()
 
-    modified = pd.DataFrame(modified, columns=train.columns)
-    return modified
+    """
+    Apply Plans Sequentially
+    """
+
+    modified = []
+    for n in xrange(test.shape[0]):
+        C = Changes()
+        if test.iloc[n][-1] > 0 or test.iloc[n][-1] == True:
+            new_row = apply2(changes, test.iloc[n].values.tolist())
+            for name, new, old in zip(test.columns, new_row, test.iloc[n].values.tolist()):
+                C.save(name, new=new, old=old)
+
+            changed.append(C.log)
+            modified.append(new_row)
+
+        # Disable the next two line if you're measuring the number of changes.
+        else:
+            if rand() > 0.7:
+                modified.append(test.iloc[n].tolist())
+
+    return pd.DataFrame(modified, columns=test.columns), changed

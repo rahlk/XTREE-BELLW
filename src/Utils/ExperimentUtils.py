@@ -40,13 +40,15 @@ def apply(changes, row):
 
 
 def apply2(changes, row):
-    newRow = row
+    new_row = row
     for idx, thres in enumerate(changes):
-        if thres > 0:
-            if newRow[idx] > thres:
-                newRow[idx] = uniform(0, thres)
+        # if thres > 0:
+            if new_row[idx] > thres:
+                new_row[idx] = uniform(0, thres)
 
-    return newRow
+    # delta = np.array(new_row) - np.array(row)
+    # delta_bool = [1 if a > 0 else -1 if a < 0 else 0 for a in delta]
+    return new_row
 
 
 def apply3(row, cols, pk_best):
@@ -66,12 +68,24 @@ def deltas(orig, patched):
     delt_numr = []
     delt_bool = []
     for row_a, row_b in zip(orig.values[:-1], patched.values[:-1]):
-        delt_bool.append([1 if a == b else 0 for a, b in zip(row_a, row_b)])
+        delt_bool.append([1 if a != b else 0 for a, b in zip(row_a, row_b)])
 
     delt_bool = np.array(delt_bool)
     fractional_change = np.sum(delt_bool, axis=0) * 100 / len(delt_bool)
 
     return fractional_change.tolist()
+
+
+def deltas_count(columns, changes):
+    delt_numr = {c:0 for c in columns}
+    for change in changes:
+        for key, val in change.iteritems():
+            try:
+                delt_numr[key] += val
+            except KeyError:
+                delt_numr.update({key: val})
+    delta = [delt_numr[key]*100/len(changes) for key in columns]
+    return delta
 
 
 def deltas_magnitude(orig, patched):
@@ -82,6 +96,24 @@ def deltas_magnitude(orig, patched):
 
     delt_bool = np.array(delt_bool)
     delt_bool = np.nan_to_num((delt_bool - delt_bool.min(axis=0)) / (
-    delt_bool.max(axis=0) - delt_bool.min(axis=0)))
+        delt_bool.max(axis=0) - delt_bool.min(axis=0)))
     fractional_change = np.mean(delt_bool, axis=0)
     return fractional_change.tolist()
+
+
+class Changes():
+    """
+    Record changes.
+    """
+
+    def __init__(self):
+        self.log = {}
+
+    def save(self, name=None, old=None, new=None):
+        if old > new:
+            delt = -1
+        elif old < new:
+            delt = +1
+        else:
+            delt = 0
+        self.log.update({name: delt})

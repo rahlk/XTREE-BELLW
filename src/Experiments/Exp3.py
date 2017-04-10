@@ -50,25 +50,25 @@ def transfer_lessons(data=None):
 
             for train_bellw, validation in CrossValidation.split(bellw,
                                                                  ways=5):
-                patched_alves = alves(train_bellw, test)
-                patched_shatw = shatnawi(train_bellw, test)
-                patched_olive = oliveira(train_bellw, test)
+                patched_alves = alves(train_bellw, test_local)
+                patched_shatw = shatnawi(train_bellw, test_local)
+                patched_olive = oliveira(train_bellw, test_local)
                 patched_xtree = xtree(train_bellw, test_local)
                 patched_xtree_local = xtree(train_local, test_local)
 
-                # How good are the patches from local lessons?
+                # How good are the patches from Alves?
                 pred_alves, distr_alves = xgboost(validation, patched_alves)
 
-                # How good are the predictions
+                # How good are the patches from Shatnawi?
                 pred_shatw, distr_shatw = xgboost(validation, patched_shatw)
 
-                # How good are the patches from the bellwether lessons?
-                pred_xtree, distr_xtree = xgboost(validation, patched_xtree)
-
-                # How good are the patches from the bellwether lessons?
+                # How good are the patches from Oliveira?
                 pred_olive, distr_olive = xgboost(validation, patched_olive)
 
-                # How good are the patches from the bellwether lessons?
+                # How good are the patches from the bellwether XTREE?
+                pred_xtree, distr_xtree = xgboost(validation, patched_xtree)
+
+                # How good are the patches from the local XTREE?
                 pred_xtree_local, distr_xtree_local = xgboost(validation,
                                                               patched_xtree_local)
 

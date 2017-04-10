@@ -12,45 +12,14 @@ root = os.path.join(os.getcwd().split('src')[0], 'src')
 if root not in sys.path:
     sys.path.append(root)
 
-from tools import pyC45
-from random import uniform, random as rand
-from pdb import set_trace
 import pandas as pd
+from tools import pyC45
+from pdb import set_trace
 from oracle.smote import SMOTE
+from Utils.MiscUtils import flatten
+from Utils.ExperimentUtils import Changes
 from Utils.FileUtil import list2dataframe
-def trueValue(all, test):
-    set_trace()
-
-
-def flatten(x):
-    """
-    Takes an N times nested list of list like [[a,b],[c, [d, e]],[f]]
-    and returns a single list [a,b,c,d,e,f]
-    """
-    result = []
-    for el in x:
-        if hasattr(el, "__iter__") and not isinstance(el, basestring):
-            result.extend(flatten(el))
-        else:
-            result.append(el)
-    return result
-
-
-class changes():
-    """
-    Record changes.
-    """
-
-    def __init__(self):
-        self.log = {}
-
-    def save(self, name=None, old=None, new=None):
-        if not old == new:
-            try:
-                delt = new / old  # if old>0 else 0
-            except:
-                delt = 0
-            self.log.update({name: delt})
+from random import uniform, random as rand
 
 
 class Patches:
@@ -102,7 +71,7 @@ class Patches:
 
     def patchIt(i, testInst, config=False):
         # 1. Find where t falls
-        C = changes()  # Record changes
+        C = Changes()  # Record changes
         testInst = pd.DataFrame(testInst).transpose()
         current = i.find(testInst, i.tree)
         node = current
@@ -147,7 +116,7 @@ class Patches:
             if i.testDF.iloc[n][-1] > 0 or i.testDF.iloc[n][-1] == True:
                 newRows.append(i.patchIt(i.testDF.iloc[n]))
             else:
-                if rand()>0.7:
+                if rand() > 0.7:
                     newRows.append(i.testDF.iloc[n].tolist())
         return pd.DataFrame(newRows, columns=i.testDF.columns)
 
@@ -162,7 +131,7 @@ def xtree(train_df, test_df):
     if isinstance(test_df, basestring):
         test_df = list2dataframe([test_df])  # create a pandas dataframe of testing data.dat
 
-    train_df = SMOTE(train_df,atleast=1000, atmost=1001)
+    train_df = SMOTE(train_df, atleast=1000, atmost=1001)
 
     tree = pyC45.dtree(train_df)  # Create a decision tree
 
@@ -171,7 +140,7 @@ def xtree(train_df, test_df):
 
     modified = patch.main()
 
-    return modified
+    return modified, patch.change
 
 
 if __name__ == '__main__':

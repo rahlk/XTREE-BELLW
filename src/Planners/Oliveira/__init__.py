@@ -15,12 +15,12 @@ root = os.path.join(os.getcwd().split('src')[0], 'src')
 if root not in sys.path:
     sys.path.append(root)
 
-import pandas as pd
 import numpy as np
+import pandas as pd
 from pdb import set_trace
+from random import random as rand
+from Utils.ExperimentUtils import apply3, Changes
 from Utils.FileUtil import list2dataframe
-from Utils.ExperimentUtils import apply3
-from collections import Counter
 
 
 def get_percentiles(df):
@@ -82,7 +82,7 @@ def oliveira(train, test):
 
     lo, hi = train.min(), train.max()
     quantile_array = get_percentiles(train)
-
+    changes =[]
 
     pk_best = dict()
 
@@ -105,14 +105,26 @@ def oliveira(train, test):
                     except KeyError:
                         pk_best.update({metric: (p, k)})
 
-    "Apply Plans Sequentially"
-    buggy = [test.iloc[n].values.tolist() for n in xrange(test.shape[0]) if
-             test.iloc[n][-1] > 0]
-    modified = []
-    changes = []
-    for attr in buggy:
-        modified.append(apply3(attr, test.columns, pk_best))
+    """
+    Apply Plans Sequentially
+    """
 
-    modified = pd.DataFrame(modified, columns=train.columns)
-    # set_trace()
-    return modified
+    modified = []
+    for n in xrange(test.shape[0]):
+        C = Changes()
+        if test.iloc[n][-1] > 0 or test.iloc[n][-1] == True:
+            old_row = test.iloc[n].values.tolist()
+            new_row = apply3(test.iloc[n].values.tolist(), test.columns, pk_best)
+            for name, new, old in zip(test.columns, new_row, old_row):
+                C.save(name, new=new, old=old)
+
+            changes.append(C.log)
+            modified.append(new_row)
+
+        # Disable the next two line if you're measuring the number of changes.
+        else:
+            if rand() > 0.7:
+                modified.append(test.iloc[n].tolist())
+
+    return pd.DataFrame(modified, columns=test.columns), changes
+

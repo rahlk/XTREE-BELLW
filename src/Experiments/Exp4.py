@@ -23,8 +23,7 @@ from Planners.Oliveira import oliveira
 from Planners.Fontana import fontana
 
 from pandas import DataFrame
-from oracle.model import rforest, xgboost
-from Utils.ExperimentUtils import deltas
+from Utils.ExperimentUtils import deltas_count
 from Utils.StatsUtils.CrossVal import CrossValidation
 
 
@@ -55,25 +54,25 @@ def changes(data=None):
                                   xrange(test.shape[0]) if
                                   test.iloc[n][-1] > 0], columns=test.columns)
 
-                patched_alves = alves(train_bellw, test)
-                patched_shatw = shatnawi(train_bellw, test)
-                patched_olive = oliveira(train_bellw, test)
-                patched_xtree = xtree(train_bellw, test_local)
-                patched_xtree_local = xtree(train_local, test_local)
+                patched_alves, changes_alves = alves(train_bellw, test_local)
+                patched_shatw, changes_shatw = shatnawi(train_bellw, test_local)
+                patched_olive, changes_olive = oliveira(train_bellw, test_local)
+                patched_xtree, changes_xtree = xtree(train_bellw, test_local)
+                patched_xtree_local, changes_xtree_local = xtree(train_local, test_local)
 
                 # How good are the patches from local lessons?
-                res[proj[:6]]["alves"].append(deltas(orig, patched_alves))
-                res[proj[:6]]["olive"].append(deltas(orig, patched_olive))
-                res[proj[:6]]["shatw"].append(deltas(orig, patched_shatw))
+                res[proj[:6]]["alves"].append(deltas_count(test.columns, changes_alves))
+                res[proj[:6]]["olive"].append(deltas_count(test.columns, changes_olive))
+                res[proj[:6]]["shatw"].append(deltas_count(test.columns, changes_shatw))
                 res[proj[:6]]["xtree_bellw"].append(
-                    deltas(orig, patched_xtree))
+                    deltas_count(test.columns, changes_xtree))
                 res[proj[:6]]["xtree_local"].append(
-                    deltas(orig, patched_xtree_local))
+                    deltas_count(test.columns, changes_xtree_local))
 
             yield res
 
 
-if __name__ == "__main__":
+def run_experiment():
     data = DefectData.get_all_projects()["Apache"]
     metrics = list2dataframe(data["ant"].data[-1]).columns
     for res in changes(data):
@@ -90,3 +89,7 @@ if __name__ == "__main__":
                 print(n, attr[1:], int(xtree_local), int(xtree_bellw), int(Olive), int(Alves), int(Shatw), sep="\t")
 
     set_trace()
+
+
+if __name__ == "__main__":
+    run_experiment()
